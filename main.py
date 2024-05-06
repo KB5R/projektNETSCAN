@@ -1,19 +1,27 @@
 import subprocess
 import platform
-import nmap 
-
+import nmap3
 
 # Initialization nmap.exe
 s_path=[r'.\Nmap\nmap.exe']
 print(type(s_path))
+#nm = nmap.PortScanner(nmap_search_path = s_path)
+#nm.scan(hosts="10.255.250.1/24",arguments="-sn")
+#ip_list=nm.all_hosts()
+#print(ip_list)
 
-nm = nmap.PortScanner(nmap_search_path = s_path)
-nm.scan(hosts="10.255.250.1/24",arguments="-sn")
-ip_list=nm.all_hosts()
-print(ip_list)
+import nmap3
+nmap = nmap3.Nmap()
+results = nmap.scan_top_ports("10.255.250.52", args="-sV")
+print(results)
 
 
 
+#nm = nmap.PortScanner()
+#nm.scan('127.0.0.1', '22-443')
+#nm.command_line()
+#ip_list=nm.all_hosts()
+#print(ip_list)
 
 
 
