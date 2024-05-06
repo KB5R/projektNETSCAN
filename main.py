@@ -2,12 +2,22 @@ import subprocess
 import platform
 import nmap 
 
+
+# Initialization nmap.exe
 s_path=[r'.\Nmap\nmap.exe']
 print(type(s_path))
+
 nm = nmap.PortScanner(nmap_search_path = s_path)
 nm.scan(hosts="10.255.250.1/24",arguments="-sn")
 ip_list=nm.all_hosts()
 print(ip_list)
+
+
+
+
+
+
+
 
 
 def trace_route(ip_address):
