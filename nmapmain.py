@@ -8,10 +8,10 @@ import subprocess
 
 
 # TCP SYN Scan (-sS)
-def syn_scan(host):
-    nmap = nmap3.Nmap()
-    scan_results = nmap.nmap_os_detection(host)
-    print(json.dumps(scan_results, indent=2))
+#def syn_scan(host):
+#    nmap = nmap3.Nmap()
+#    scan_results = nmap.nmap_os_detection(host)
+#   print(json.dumps(scan_results, indent=2))
 
 #host = input('Введите IP адрес или DNS имя для SYN cканирования: ')
 #syn_scan(host)
@@ -34,12 +34,17 @@ def fin_scan(host):
 #host = input('Введите IP адрес или DNS имя для FIN cканирования: ')
 #fin_scan(host)
 
-def top10scan(host):
+def syn_scan(host):
     nmap = nmap3.Nmap()
-    os_results = nmap.nmap_os_detection(host)  # БОЛЬШИНСТВО БУДЕТ КОРНЕВЫМ
-    print(json.dumps(os_results, indent=2))
-host = input('Введите IP адрес или DNS имя для определние типа os')
-top10scan(host)
+    scan_results = nmap.nmap_os_detection(host)
+    if "error" in scan_results.keys():
+        print(scan_results["msg"])
+        return
+    oss = [item['name'] for item in scan_results[host]['osmatch']]
+    return oss
+host = input('Введите IP адрес или DNS имя для SYN cканирования: ')
+names = syn_scan(host)
+print(names)
 
 
 
@@ -51,11 +56,11 @@ def ping_scan(host):
     scan_results = nmap.nmap_ping_scan(host)
     print(json.dumps(scan_results, indent=2))
 
-host = input('Введите IP адрес для ping сканирования\n'
-             'Пример:192.168.1.1/24: Такой формат ввода сканирует всю подсеть\n'
-             'Пример:192.168.1.10:Такой формат ввода сканирует конкретную машину\n '
-             'Введите адрес: ')
-ping_scan(host)
+#host = input('Введите IP адрес для ping сканирования\n'
+  #           'Пример:192.168.1.1/24: Такой формат ввода сканирует всю подсеть\n'
+ #            'Пример:192.168.1.10:Такой формат ввода сканирует конкретную машину\n '
+ #            'Введите адрес: ')
+#ping_scan(host)
 
 
 
