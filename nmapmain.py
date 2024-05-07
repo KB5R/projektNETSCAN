@@ -23,6 +23,7 @@ def tcp_scan(host):
     scan_results = nmap.nmap_tcp_scan(host)
     ports = [(f"port: {port['portid']}\n"
               f"state: {port['state']}\n"
+              f"name: {port['service']['name']}\n"
               f"protocol: {port['protocol']}\n")
         for port in scan_results[host]['ports']
     ]
