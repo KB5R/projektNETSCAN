@@ -3,10 +3,6 @@ import json
 import subprocess
 
 
-
-
-
-
 # TCP SYN Scan (-sS)
 #def syn_scan(host):
 #    nmap = nmap3.Nmap()
@@ -30,9 +26,9 @@ def tcp_scan(host):
     return ports
 
 
-host = '10.255.250.56'
-ports = tcp_scan(host)
-print("\n".join(ports))
+#host = '10.255.250.52'
+#ports = tcp_scan(host)
+#print("\n".join(ports))
 
 
 # FIN Scan (-sF)
@@ -62,15 +58,26 @@ def syn_scan(host):
 # Пинг-сканирование (-sP)
 
 def ping_scan(host):
-    nmap = nmap3.NmapScanTechniques()
+    nmap = nmap3.NmapScanTechniques(path="./Nmap/nmap.exe")
     scan_results = nmap.nmap_ping_scan(host)
-    print(json.dumps(scan_results, indent=2))
+    ports = [
+        (f"host {host}:\t"
+         f"{'' if not info.get('state') else info['state']['state']}\t {"null" if not info.get('macaddress') else info['macaddress']['addr'] + '\t' + info['macaddress']['vendor']}\n")
+        for host, info in
+            filter(
+            lambda x: x[0] not in ("task_results", "stats", "runtime"),
+            scan_results.items()
+        )
+    ]
+    return ports
 
 #host = input('Введите IP адрес для ping сканирования\n'
-#           'Пример:192.168.1.1/24: Такой формат ввода сканирует всю подсеть\n'
-#            'Пример:192.168.1.10:Такой формат ввода сканирует конкретную машину\n '
-#            'Введите адрес: ')
-#ping_scan(host)
+#        'Пример:192.168.1.1/24: Такой формат ввода сканирует всю подсеть\n'
+#       'Пример:192.168.1.10:Такой формат ввода сканирует конкретную машину\n '
+#       'Введите адрес: ')
+host = '10.255.250.1/24'
+ports = ping_scan(host)
+print("\n".join(ports))
 
 
 
